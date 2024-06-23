@@ -3,14 +3,10 @@ description: 'Action for installing and configuring Ninja build system to PATH o
 author: 'acidicMercury8'
 
 inputs:
-  input-string:
-    description: 'Input string'
-    required: true
-    default: 'input'
-
-outputs:
-  output-string:
-    description: 'Output string'
+  version:
+    description: 'Version of Ninja'
+    required: false
+    default: 'latest'
 
 runs:
   using: node20
