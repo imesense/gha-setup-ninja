@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Setup Ninja
         id: setup-ninja
-        uses: imesense/gha-setup-ninja@d6f2b444ac6afd42599867e6d3334140cd9c27b2
+        uses: imesense/gha-setup-ninja@1fd7d9872c94b7dde9afdca4a796df8c68806ac3
         with:
           version: '1.12.1'
 
