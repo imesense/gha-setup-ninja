@@ -1,9 +1,11 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import * as io from "@actions/io";
 import * as os from "os";
 import * as fs from "fs";
 import * as request from "request";
 import zip from "jszip";
+import path from "path";
 
 function getPlatform()
 {
@@ -69,24 +71,28 @@ async function run()
             filename = `${filename}.exe`;
         }
 
+        const destionation = "bin";
+        await io.mkdirP(destionation);
+        const filepath = path.join(destionation, filename);
+
         const buffer = await downloadAsBuffer(url);
         const archive = await zip.loadAsync(buffer);
         const binary = archive.files[filename];
         if (binary)
         {
             const content = await binary.async("nodebuffer");
-            fs.writeFileSync(filename, content);
-            console.log(`File ${filename} has been written successfully`);
+            fs.writeFileSync(filepath, content);
+            console.log(`File ${filepath} has been written successfully`);
         }
         else
         {
             throw new Error(`Could not found "${filename}" in the downloaded file!`);
         }
 
-        fs.chmodSync(filename, "755");
+        fs.chmodSync(filepath, "755");
         core.info(`Successfully installed Ninja ${version}`);
 
-        core.addPath(__dirname);
+        core.addPath(destionation);
         core.info(`Successfully added Ninja to PATH`);
 
         const payload = JSON.stringify(github.context.payload, undefined, 2);
