@@ -1,4 +1,4 @@
-name: 'Setup Ninja'
+name: 'Setup Ninja (ImeSense)'
 description: 'Action for installing and configuring Ninja build system to PATH of the runner'
 author: 'acidicMercury8'
 
