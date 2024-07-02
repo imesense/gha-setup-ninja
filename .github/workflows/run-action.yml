@@ -12,8 +12,8 @@ on:
       - 'action.json'
 
 jobs:
-  run-action:
-    name: 'Run action'
+  setup-version:
+    name: 'Setup version'
 
     strategy:
       matrix:
@@ -27,9 +27,30 @@ jobs:
     steps:
       - name: Setup Ninja
         id: setup-ninja
-        uses: imesense/gha-setup-ninja@1fd7d9872c94b7dde9afdca4a796df8c68806ac3
+        uses: imesense/gha-setup-ninja@747685d54dcf8adbd5d4aba0858ab7ef64c22398
         with:
           version: '1.12.1'
+
+      - name: Print version
+        run: |
+          ninja --version
+
+  setup-latest:
+    name: 'Setup latest'
+
+    strategy:
+      matrix:
+        system:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      - name: Setup Ninja
+        id: setup-ninja
+        uses: imesense/gha-setup-ninja@747685d54dcf8adbd5d4aba0858ab7ef64c22398
 
       - name: Print version
         run: |
