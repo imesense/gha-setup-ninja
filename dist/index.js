@@ -79286,7 +79286,7 @@ async function run()
         const platform = getPlatform().toString();
         const url =
             version === "latest"
-                ? "https://github.com/ninja-build/ninja/releases/latest/download/ninja-${platform}.zip"
+                ? `https://github.com/ninja-build/ninja/releases/latest/download/ninja-${platform}.zip`
                 : `https://github.com/ninja-build/ninja/releases/download/v${version}/ninja-${platform}.zip`;
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`platform: ${platform}`);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.debug(`url: ${url}`);
@@ -79299,8 +79299,8 @@ async function run()
 
         const destionation = "bin";
         await _actions_io__WEBPACK_IMPORTED_MODULE_2__.mkdirP(destionation);
-        const filepath = path__WEBPACK_IMPORTED_MODULE_7___default().join(destionation, filename);
 
+        const filepath = path__WEBPACK_IMPORTED_MODULE_7___default().join(destionation, filename);
         const buffer = await downloadAsBuffer(url);
         const archive = await jszip__WEBPACK_IMPORTED_MODULE_6___default().loadAsync(buffer);
         const binary = archive.files[filename];

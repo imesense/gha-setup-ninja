@@ -60,7 +60,7 @@ async function run()
         const platform = getPlatform().toString();
         const url =
             version === "latest"
-                ? "https://github.com/ninja-build/ninja/releases/latest/download/ninja-${platform}.zip"
+                ? `https://github.com/ninja-build/ninja/releases/latest/download/ninja-${platform}.zip`
                 : `https://github.com/ninja-build/ninja/releases/download/v${version}/ninja-${platform}.zip`;
         core.debug(`platform: ${platform}`);
         core.debug(`url: ${url}`);
@@ -73,8 +73,8 @@ async function run()
 
         const destionation = "bin";
         await io.mkdirP(destionation);
-        const filepath = path.join(destionation, filename);
 
+        const filepath = path.join(destionation, filename);
         const buffer = await downloadAsBuffer(url);
         const archive = await zip.loadAsync(buffer);
         const binary = archive.files[filename];
