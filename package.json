@@ -1,6 +1,6 @@
 {
   "name": "gha-setup-ninja",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Action for installing and configuring Ninja build system to PATH of the runner",
   "author": "acidicMercury8",
   "license": "MIT",
