@@ -82,7 +82,7 @@ async function run()
         {
             const content = await binary.async("nodebuffer");
             fs.writeFileSync(filepath, content);
-            console.log(`File ${filepath} has been written successfully`);
+            core.info(`File \"${filepath}\" has been written successfully`);
         }
         else
         {
@@ -94,9 +94,6 @@ async function run()
 
         core.addPath(destionation);
         core.info(`Successfully added Ninja to PATH`);
-
-        const payload = JSON.stringify(github.context.payload, undefined, 2);
-        console.debug(`Event payload: ${payload}`);
     }
     catch (error)
     {

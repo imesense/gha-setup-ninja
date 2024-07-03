@@ -79308,7 +79308,7 @@ async function run()
         {
             const content = await binary.async("nodebuffer");
             fs__WEBPACK_IMPORTED_MODULE_4__.writeFileSync(filepath, content);
-            console.log(`File ${filepath} has been written successfully`);
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`File \"${filepath}\" has been written successfully`);
         }
         else
         {
@@ -79320,9 +79320,6 @@ async function run()
 
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.addPath(destionation);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Successfully added Ninja to PATH`);
-
-        const payload = JSON.stringify(_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload, undefined, 2);
-        console.debug(`Event payload: ${payload}`);
     }
     catch (error)
     {
