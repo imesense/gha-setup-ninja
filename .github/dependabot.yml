@@ -12,7 +12,7 @@ updates:
           - minor
           - patch
     ignore:
-      - dependency-name: 'imesense/gha-echo-action*'
+      - dependency-name: 'imesense/gha-setup-ninja*'
 
   - package-ecosystem: npm
     directory: /
