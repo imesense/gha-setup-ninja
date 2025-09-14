@@ -8,6 +8,10 @@ inputs:
     required: false
     default: 'latest'
 
+branding:
+  icon: arrow-down
+  color: gray-dark
+
 runs:
   using: node20
   main: dist/index.js
