@@ -16464,7 +16464,7 @@ JSZip.defaults = __nccwpck_require__(1190);
 
 // TODO find a better way to handle this version,
 // a require('package.json').version doesn't work with webpack, see #327
-JSZip.version = "3.10.1";
+JSZip.version = "3.10.2";
 
 JSZip.loadAsync = function (content, options) {
     return new JSZip().loadAsync(content, options);
@@ -18911,16 +18911,17 @@ exports.getTypeOf = function(input) {
     if (typeof input === "string") {
         return "string";
     }
-    if (Object.prototype.toString.call(input) === "[object Array]") {
+    var proto = Object.prototype.toString.call(input);
+    if (proto === "[object Array]") {
         return "array";
     }
     if (support.nodebuffer && nodejsUtils.isBuffer(input)) {
         return "nodebuffer";
     }
-    if (support.uint8array && input instanceof Uint8Array) {
+    if (support.uint8array && proto === "[object Uint8Array]") {
         return "uint8array";
     }
-    if (support.arraybuffer && input instanceof ArrayBuffer) {
+    if (support.arraybuffer && proto === "[object ArrayBuffer]") {
         return "arraybuffer";
     }
 };
@@ -19013,21 +19014,29 @@ exports.prepareContent = function(name, inputData, isBinary, isOptimizedBinarySt
 
         var isBlob = support.blob && (data instanceof Blob || ["[object File]", "[object Blob]"].indexOf(Object.prototype.toString.call(data)) !== -1);
 
-        if (isBlob && typeof FileReader !== "undefined") {
-            return new external.Promise(function (resolve, reject) {
-                var reader = new FileReader();
+        if (isBlob) {
+            if (typeof Blob.prototype.arrayBuffer !== "undefined") {
+                return data.arrayBuffer();
+            } else if (typeof FileReader !== "undefined") {
+                return new external.Promise(function (resolve, reject) {
+                    var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    resolve(e.target.result);
-                };
-                reader.onerror = function(e) {
-                    reject(e.target.error);
-                };
-                reader.readAsArrayBuffer(data);
-            });
-        } else {
-            return data;
+                    reader.onload = function(e) {
+                        resolve(e.target.result);
+                    };
+                    reader.onerror = function(e) {
+                        reject(e.target.error);
+                    };
+                    reader.readAsArrayBuffer(data);
+                });
+            } else {
+                return external.Promise.reject(
+                    new Error(name + " is a Blob, but we have no way of reading it.")
+                );
+            }
         }
+
+        return data;
     });
 
     return promise.then(function(data) {
