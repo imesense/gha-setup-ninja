@@ -17,7 +17,7 @@ Action for installing and configuring __Ninja__ build system to `PATH` of the ru
 ## Example usage
 
 ```yaml
-uses: imesense/gha-setup-ninja@v0.3
+uses: imesense/gha-setup-ninja@v0.4
 with:
   version: '1.12.1'
 ```
